@@ -18,6 +18,11 @@ class ViewController: UIViewController {
         self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.pdfView.backgroundColor = .blue
         self.view.addSubview(self.pdfView)
+        self.pdfView.translatesAutoresizingMaskIntoConstraints = false
+        self.pdfView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        self.pdfView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        self.pdfView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        self.pdfView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
 
 
