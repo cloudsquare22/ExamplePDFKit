@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var pdfView: PDFView!
     var turnPageCount: Int = 1
     var nowPage: Int = 1
+    var nowOrientation: UIDeviceOrientation = .unknown
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,9 @@ class ViewController: UIViewController {
     @objc func orientationDidChangeNotification(_ notification: Notification) {
         let device = UIDevice.current
         guard self.shouldAutorotate else {
+            return
+        }
+        guard self.nowOrientation != device.orientation else {
             return
         }
         print("Device orientation:\(device.orientation.toString())")
@@ -45,6 +49,13 @@ class ViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.turnPage(sender:)))
         swipeRight.direction = .right
         self.pdfView.addGestureRecognizer(swipeRight)
+
+        let tapPDFView = UITapGestureRecognizer(target: self, action: #selector(self.tapPDFView(sender:)))
+        tapPDFView.numberOfTapsRequired = 2
+        pdfView.addGestureRecognizer(tapPDFView)
+    }
+
+    @objc func tapPDFView(sender: UITapGestureRecognizer) {
     }
 
     @objc func turnPage(sender: UISwipeGestureRecognizer) {
@@ -68,6 +79,7 @@ class ViewController: UIViewController {
             break
         }
         self.goPage()
+        self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
     }
 
     func createPDFView(orientation: UIDeviceOrientation) {
@@ -80,15 +92,17 @@ class ViewController: UIViewController {
         case .portrait, .portraitUpsideDown:
             self.pdfView.displayMode = .singlePage
             self.turnPageCount = 1
+            self.nowOrientation = orientation
         case .landscapeLeft, .landscapeRight:
             self.pdfView.displayMode = .twoUp
             self.turnPageCount = 2
+            self.nowOrientation = orientation
         default:
             break
         }
         self.pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.pdfView.autoScales = true
-//        self.pdfView.displaysAsBook = true
+        self.pdfView.displaysAsBook = true
         
         self.addConstraintPDFView()
         self.addGesture()
@@ -118,7 +132,7 @@ class ViewController: UIViewController {
         self.pdfView.go(to: pdfPage!)
         print("scaleFactor:\(self.pdfView.scaleFactor)")
         print("scaleFactorForSizeToFit:\(self.pdfView.scaleFactorForSizeToFit)")
-        self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
+//        self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
     }
 
 }
