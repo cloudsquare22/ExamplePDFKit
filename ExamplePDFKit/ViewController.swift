@@ -24,11 +24,14 @@ class ViewController: UIViewController {
     }
     
     @objc func orientationDidChangeNotification(_ notification: Notification) {
+        let device = UIDevice.current
         guard self.shouldAutorotate else {
             return
         }
-        let device = UIDevice.current
         print("Device orientation:\(device.orientation.toString())")
+        guard device.orientation != .faceUp && device.orientation != .faceDown && device.orientation != .unknown else {
+            return
+        }
         self.createPDFView(orientation: device.orientation)
         self.loadDocument(bookurl: Bundle.main.url(forResource: "progit.ja", withExtension: "pdf")!)
         self.goPage()
@@ -68,9 +71,6 @@ class ViewController: UIViewController {
     }
 
     func createPDFView(orientation: UIDeviceOrientation) {
-        guard orientation != .faceUp && orientation != .faceDown && orientation != .unknown else {
-            return
-        }
         self.clearSunView(view: self.baseView)
 
         self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.baseView.frame.width, height: self.baseView.frame.height))
@@ -86,7 +86,9 @@ class ViewController: UIViewController {
         default:
             break
         }
+        self.pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.pdfView.autoScales = true
+//        self.pdfView.displaysAsBook = true
         
         self.addConstraintPDFView()
         self.addGesture()
@@ -111,8 +113,12 @@ class ViewController: UIViewController {
     }
     
     func goPage() {
+        print(self.nowPage)
         let pdfPage = self.pdfView.document?.page(at: self.nowPage - 1)
         self.pdfView.go(to: pdfPage!)
+        print("scaleFactor:\(self.pdfView.scaleFactor)")
+        print("scaleFactorForSizeToFit:\(self.pdfView.scaleFactorForSizeToFit)")
+        self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
     }
 
 }
