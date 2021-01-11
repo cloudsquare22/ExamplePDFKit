@@ -61,8 +61,14 @@ class ViewController: UIViewController {
         self.pdfView.addGestureRecognizer(swipeRight)
 
         let tapPDFView = UITapGestureRecognizer(target: self, action: #selector(self.tapPDFView(sender:)))
-        tapPDFView.numberOfTapsRequired = 2
+        tapPDFView.numberOfTapsRequired = 1
 //        pdfView.addGestureRecognizer(tapPDFView)
+
+//        print(pdfView.gestureRecognizers!.count)
+//        for gesture in pdfView.gestureRecognizers! {
+//            print(gesture)
+//        }
+
     }
 
     @objc func tapPDFView(sender: UITapGestureRecognizer) {
