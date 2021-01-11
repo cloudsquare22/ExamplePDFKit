@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-extension UIDeviceOrientation {
-    func toString() -> String {
+extension UIDeviceOrientation: CustomStringConvertible {
+    public var description: String {
         var result = ""
         switch self.rawValue {
         case 0:
@@ -33,8 +33,8 @@ extension UIDeviceOrientation {
     }
 }
 
-extension UIInterfaceOrientation {
-    func toString() -> String {
+extension UIInterfaceOrientation: CustomStringConvertible {
+    public var description: String {
         var result = ""
         switch self.rawValue {
         case 0:

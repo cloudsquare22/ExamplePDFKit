@@ -41,8 +41,8 @@ class ViewController: UIViewController {
         guard self.nowOrientation != orientation else {
             return
         }
-        print("Device orientation:\(device.orientation.toString())")
-        print("Application orientation:\(orientation.toString())")
+        print("Device orientation:\(device.orientation.description)")
+        print("Application orientation:\(orientation.description)")
         guard orientation != .unknown else {
             return
         }
