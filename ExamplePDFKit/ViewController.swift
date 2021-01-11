@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var pdfView: PDFView!
     var turnPageCount: Int = 1
     var nowPage: Int = 1
-    var nowOrientation: UIDeviceOrientation = .unknown
+    var nowOrientation: UIInterfaceOrientation = .unknown
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +25,28 @@ class ViewController: UIViewController {
     }
     
     @objc func orientationDidChangeNotification(_ notification: Notification) {
+        print("UIApplication.shared.windows.first?.windowScene?.interfaceOrientation")
+        print("isPortrait:\(UIApplication.shared.windows.first!.windowScene!.interfaceOrientation.isPortrait)")
+        print("isLandscape:\(UIApplication.shared.windows.first!.windowScene!.interfaceOrientation.isLandscape)")
+        print("rawValue:\(UIApplication.shared.windows.first!.windowScene!.interfaceOrientation.rawValue)")
+        print("UIDevice.current.orientation")
+        print("isPortrait:\(UIDevice.current.orientation.isPortrait)")
+        print("isLandscape:\(UIDevice.current.orientation.isLandscape)")
+        print("rawValue:\(UIDevice.current.orientation.rawValue)")
         let device = UIDevice.current
+        let orientation = UIApplication.shared.windows.first!.windowScene!.interfaceOrientation
         guard self.shouldAutorotate else {
             return
         }
-        guard self.nowOrientation != device.orientation else {
+        guard self.nowOrientation != orientation else {
             return
         }
         print("Device orientation:\(device.orientation.toString())")
-        guard device.orientation != .faceUp && device.orientation != .faceDown && device.orientation != .unknown else {
+        print("Application orientation:\(orientation.toString())")
+        guard orientation != .unknown else {
             return
         }
-        self.createPDFView(orientation: device.orientation)
+        self.createPDFView(orientation: orientation)
         self.loadDocument(bookurl: Bundle.main.url(forResource: "progit.ja", withExtension: "pdf")!)
         self.goPage()
     }
@@ -82,7 +92,7 @@ class ViewController: UIViewController {
         self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
     }
 
-    func createPDFView(orientation: UIDeviceOrientation) {
+    func createPDFView(orientation: UIInterfaceOrientation) {
         self.clearSunView(view: self.baseView)
 
         self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.baseView.frame.width, height: self.baseView.frame.height))

@@ -32,3 +32,24 @@ extension UIDeviceOrientation {
         return result
     }
 }
+
+extension UIInterfaceOrientation {
+    func toString() -> String {
+        var result = ""
+        switch self.rawValue {
+        case 0:
+            result = "unknown"
+        case 1:
+            result = "portrait"
+        case 2:
+            result = "portraitUpsideDown"
+        case 3:
+            result = "landscapeLeft"
+        case 4:
+            result = "landscapeRight"
+        default:
+            break
+        }
+        return result
+    }
+}
