@@ -33,14 +33,7 @@ class ViewController: UIViewController {
     
     @IBAction func tapMenuIcon(_ sender: Any) {
         print(#function)
-        self.menuView.isHidden.toggle()
-        switch self.menuView.isHidden {
-        case true:
-            self.menuIcon.setImage(UIImage(systemName: "chevron.down.circle"), for: .normal)
-        case false:
-            self.menuIcon.setImage(UIImage(systemName: "chevron.up.circle"), for: .normal)
-        }
-        
+        self.menuControl()
     }
     
     @IBAction func tapMenuFile(_ sender: Any) {
@@ -84,6 +77,10 @@ class ViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.turnPage(sender:)))
         swipeRight.direction = .right
         self.pdfView.addGestureRecognizer(swipeRight)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeDown(sender:)))
+        swipeDown.direction = .down
+        self.pdfView.addGestureRecognizer(swipeDown)
 
         let tapPDFView = UITapGestureRecognizer(target: self, action: #selector(self.tapPDFView(sender:)))
         tapPDFView.numberOfTapsRequired = 1
@@ -121,6 +118,21 @@ class ViewController: UIViewController {
         }
         self.goPage()
         self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
+    }
+
+    @objc func swipeDown(sender: UISwipeGestureRecognizer) {
+        print(#function)
+        self.menuControl()
+    }
+    
+    func menuControl() {
+        self.menuView.isHidden.toggle()
+        switch self.menuView.isHidden {
+        case true:
+            self.menuIcon.setImage(UIImage(systemName: "chevron.down.circle"), for: .normal)
+        case false:
+            self.menuIcon.setImage(UIImage(systemName: "chevron.up.circle"), for: .normal)
+        }
     }
 
     func createPDFView(orientation: UIInterfaceOrientation) {
