@@ -7,11 +7,15 @@
 
 import UIKit
 import PDFKit
+import UniformTypeIdentifiers
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var baseView: UIView!
-
+    @IBOutlet weak var menuView: UIView!
+    @IBOutlet weak var menuIcon: UIButton!
+    @IBOutlet weak var menuFile: UIButton!
+    
     var pdfView: PDFView!
     var turnPageCount: Int = 1
     var nowPage: Int = 1
@@ -20,8 +24,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.menuView.isHidden = true
+        self.menuView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(self.orientationDidChangeNotification(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    @IBAction func tapMenuIcon(_ sender: Any) {
+        print(#function)
+        self.menuView.isHidden.toggle()
+        switch self.menuView.isHidden {
+        case true:
+            self.menuIcon.setImage(UIImage(systemName: "chevron.down.circle"), for: .normal)
+        case false:
+            self.menuIcon.setImage(UIImage(systemName: "chevron.up.circle"), for: .normal)
+        }
+        
+    }
+    
+    @IBAction func tapMenuFile(_ sender: Any) {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf])
+        documentPicker.delegate = self
+        self.present(documentPicker, animated: true, completion: nil)
     }
     
     @objc func orientationDidChangeNotification(_ notification: Notification) {
@@ -152,4 +177,20 @@ class ViewController: UIViewController {
 //        self.pdfView.scaleFactor = self.pdfView.scaleFactorForSizeToFit
     }
 
+}
+
+extension ViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if let documentURL = self.pdfView.document?.documentURL {
+            documentURL.stopAccessingSecurityScopedResource()
+        }
+        print(urls)
+        let url = urls[0]
+        let _ = url.startAccessingSecurityScopedResource()
+        self.nowPage = 1
+        self.createPDFView(orientation: self.nowOrientation)
+        self.loadDocument(bookurl: url)
+        self.goPage()
+    }
+    
 }
