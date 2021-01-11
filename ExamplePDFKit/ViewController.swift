@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 
         let tapPDFView = UITapGestureRecognizer(target: self, action: #selector(self.tapPDFView(sender:)))
         tapPDFView.numberOfTapsRequired = 2
-        pdfView.addGestureRecognizer(tapPDFView)
+//        pdfView.addGestureRecognizer(tapPDFView)
     }
 
     @objc func tapPDFView(sender: UITapGestureRecognizer) {
@@ -101,6 +101,7 @@ class ViewController: UIViewController {
             break
         }
         self.pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.pdfView.displayDirection = .vertical
         self.pdfView.autoScales = true
         self.pdfView.displaysAsBook = true
         
