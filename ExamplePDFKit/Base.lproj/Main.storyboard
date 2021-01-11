@@ -44,6 +44,11 @@
                                     <constraint firstAttribute="height" constant="57" id="d0x-9y-Xzr"/>
                                     <constraint firstAttribute="bottom" secondItem="OyN-aP-aqs" secondAttribute="bottom" constant="10" id="y3W-C5-Zg2"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWT-rP-v5U">
                                 <rect key="frame" x="8" y="8" width="42" height="41"/>

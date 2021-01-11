@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.menuView.isHidden = true
-        self.menuView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        self.menuView.backgroundColor = UIColor.systemGray.withAlphaComponent(0.3)
         
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(self.orientationDidChangeNotification(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
