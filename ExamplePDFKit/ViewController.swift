@@ -126,12 +126,30 @@ class ViewController: UIViewController {
     }
     
     func menuControl() {
-        self.menuView.isHidden.toggle()
-        switch self.menuView.isHidden {
+        switch !self.menuView.isHidden {
         case true:
-            self.menuIcon.setImage(UIImage(systemName: "chevron.down.circle"), for: .normal)
+            self.menuView.alpha = 1.0
+            UIView.animate(withDuration: 0.5,animations: {
+                self.menuView.alpha = 0.0
+                self.menuIcon.transform = CGAffineTransform(rotationAngle: CGFloat.pi/180*180)
+                },
+            completion: { (_) in
+                self.menuIcon.transform = CGAffineTransform(rotationAngle: CGFloat.pi/180*0)
+                self.menuIcon.setImage(UIImage(systemName: "chevron.down.circle"), for: .normal)
+                self.menuView.isHidden.toggle()
+            })
         case false:
-            self.menuIcon.setImage(UIImage(systemName: "chevron.up.circle"), for: .normal)
+            self.menuView.alpha = 0.0
+            self.menuIcon.transform = CGAffineTransform(rotationAngle: CGFloat.pi/180*359)
+            UIView.animate(withDuration: 0.5, animations: {
+                self.menuView.isHidden.toggle()
+                self.menuView.alpha = 1.0
+                self.menuIcon.transform = CGAffineTransform(rotationAngle: CGFloat.pi/180*180)
+                },
+            completion: { (_) in
+                self.menuIcon.transform = CGAffineTransform(rotationAngle: CGFloat.pi/180*0)
+                self.menuIcon.setImage(UIImage(systemName: "chevron.up.circle"), for: .normal)
+            })
         }
     }
 

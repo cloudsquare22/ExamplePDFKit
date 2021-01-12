@@ -29,8 +29,9 @@
                                             <constraint firstAttribute="height" constant="38" id="4OT-2e-4NP"/>
                                             <constraint firstAttribute="width" constant="49" id="iCS-Is-Q38"/>
                                         </constraints>
+                                        <color key="tintColor" systemColor="linkColor"/>
                                         <state key="normal" image="folder" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36" weight="light"/>
                                         </state>
                                         <connections>
                                             <action selector="tapMenuFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BoL-QA-HGU"/>
@@ -46,7 +47,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="30"/>
+                                        <integer key="value" value="32"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -56,8 +57,9 @@
                                     <constraint firstAttribute="height" constant="41" id="Ist-Xd-4bB"/>
                                     <constraint firstAttribute="width" constant="42" id="Rmz-8A-c8S"/>
                                 </constraints>
+                                <color key="tintColor" systemColor="linkColor"/>
                                 <state key="normal" image="chevron.down.circle" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36" weight="light"/>
                                 </state>
                                 <connections>
                                     <action selector="tapMenuIcon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lid-wS-Aw1"/>
@@ -93,6 +95,9 @@
     <resources>
         <image name="chevron.down.circle" catalog="system" width="128" height="121"/>
         <image name="folder" catalog="system" width="128" height="97"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
