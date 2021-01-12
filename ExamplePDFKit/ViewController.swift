@@ -20,12 +20,14 @@ class ViewController: UIViewController {
     var turnPageCount: Int = 1
     var nowPage: Int = 1
     var nowOrientation: UIInterfaceOrientation = .unknown
+    var bookurl: URL? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.menuView.isHidden = true
         self.menuView.backgroundColor = UIColor.systemGray.withAlphaComponent(0.3)
+        self.bookurl = Bundle.main.url(forResource: "progit.ja", withExtension: "pdf")
         
         let notification = NotificationCenter.default
         notification.addObserver(self, selector: #selector(self.orientationDidChangeNotification(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -65,7 +67,7 @@ class ViewController: UIViewController {
             return
         }
         self.createPDFView(orientation: orientation)
-        self.loadDocument(bookurl: Bundle.main.url(forResource: "progit.ja", withExtension: "pdf")!)
+        self.loadDocument()
         self.goPage()
     }
     
@@ -180,8 +182,8 @@ class ViewController: UIViewController {
         self.addGesture()
     }
     
-    func loadDocument(bookurl: URL) {
-        self.pdfView.document = PDFDocument(url: bookurl)
+    func loadDocument() {
+        self.pdfView.document = PDFDocument(url: self.bookurl!)
     }
     
     func clearSunView(view: UIView) {
@@ -219,7 +221,8 @@ extension ViewController: UIDocumentPickerDelegate {
         let _ = url.startAccessingSecurityScopedResource()
         self.nowPage = 1
         self.createPDFView(orientation: self.nowOrientation)
-        self.loadDocument(bookurl: url)
+        self.bookurl = url
+        self.loadDocument()
         self.goPage()
     }
     
