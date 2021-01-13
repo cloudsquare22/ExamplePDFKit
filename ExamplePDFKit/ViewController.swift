@@ -67,7 +67,6 @@ class ViewController: UIViewController {
             return
         }
         self.createPDFView(orientation: orientation)
-        self.loadDocument()
         self.goPage()
     }
     
@@ -159,6 +158,7 @@ class ViewController: UIViewController {
         self.clearSunView(view: self.baseView)
 
         self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.baseView.frame.width, height: self.baseView.frame.height))
+        self.loadDocument()
         self.baseView.addSubview(self.pdfView)
 
         switch orientation {
@@ -220,9 +220,8 @@ extension ViewController: UIDocumentPickerDelegate {
         let url = urls[0]
         let _ = url.startAccessingSecurityScopedResource()
         self.nowPage = 1
-        self.createPDFView(orientation: self.nowOrientation)
         self.bookurl = url
-        self.loadDocument()
+        self.createPDFView(orientation: self.nowOrientation)
         self.goPage()
     }
     
