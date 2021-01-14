@@ -174,10 +174,12 @@ class ViewController: UIViewController {
             break
         }
         self.pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.pdfView.displayDirection = .vertical
+        self.pdfView.displayDirection = .horizontal
         self.pdfView.autoScales = true
+        self.pdfView.pageBreakMargins = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+//        self.pdfView.usePageViewController(true, withViewOptions: [:])
         self.pdfView.displaysAsBook = true
-        
+
         self.addConstraintPDFView()
         self.addGesture()
     }
