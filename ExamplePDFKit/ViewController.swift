@@ -155,11 +155,14 @@ class ViewController: UIViewController {
     }
 
     func createPDFView(orientation: UIInterfaceOrientation) {
-        self.clearSunView(view: self.baseView)
-
-        self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.baseView.frame.width, height: self.baseView.frame.height))
-        self.loadDocument()
-        self.baseView.addSubview(self.pdfView)
+        if self.pdfView == nil || self.pdfView.document?.documentURL != self.bookurl {
+            self.clearSunView(view: self.baseView)
+            self.pdfView = PDFView(frame: CGRect(x: 0, y: 0, width: self.baseView.frame.width, height: self.baseView.frame.height))
+            self.loadDocument()
+            self.baseView.addSubview(self.pdfView)
+            self.addConstraintPDFView()
+            self.addGesture()
+        }
 
         switch orientation {
         case .portrait, .portraitUpsideDown:
@@ -180,8 +183,6 @@ class ViewController: UIViewController {
 //        self.pdfView.usePageViewController(true, withViewOptions: [:])
         self.pdfView.displaysAsBook = true
 
-        self.addConstraintPDFView()
-        self.addGesture()
     }
     
     func loadDocument() {
